@@ -1,0 +1,22 @@
+{
+  "name": "s5-jokes",
+  "version": "1.0.0",
+  "description": "Jokes App API",
+  "main": "./src/jokes.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/silviafado/s5-jokes.git"
+  },
+  "author": "Silvia Fadó",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/silviafado/s5-jokes/issues"
+  },
+  "homepage": "https://github.com/silviafado/s5-jokes#readme",
+  "dependencies": {
+    "bootstrap": "^5.1.1"
+  }
+}
