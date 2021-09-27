@@ -1,3 +1,4 @@
+// Exercici 1
 /* Global Variables */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -37,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 /* URLs for API calls */
-var url = 'https://icanhazdadjoke.com/';
+var urlAPI = 'https://icanhazdadjoke.com/';
 var urlPost = 'http://localhost:8000/addEntry';
 var urlUI = 'http://localhost:8000/all';
 /* Create a new date instance dynamically with JS */
@@ -47,21 +48,23 @@ var newDate = d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear();
 var generate = document.getElementById('button').addEventListener('click', performAction);
 /* Function called by event listener */
 function performAction(e) {
-    getJoke(url)
+    getJoke(urlAPI)
         .then(function (data) {
         postData(urlPost, data = { date: newDate, joke: data.joke })
-            .then(function (newEntry) {
-            console.log(newEntry);
-            updateUI(urlUI);
+            .then(function () {
+            updateUI(urlUI)
+                .then(function () {
+                report(urlUI);
+            });
         });
     });
 }
 /* Function to GET Web API Data */
-var getJoke = function (url) { return __awaiter(_this, void 0, void 0, function () {
+var getJoke = function (urlAPI) { return __awaiter(_this, void 0, void 0, function () {
     var res, data, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, fetch(url, {
+            case 0: return [4 /*yield*/, fetch(urlAPI, {
                     headers: { 'Accept': 'application/json' }
                 })];
             case 1:
@@ -73,7 +76,7 @@ var getJoke = function (url) { return __awaiter(_this, void 0, void 0, function 
             case 3:
                 data = _a.sent();
                 console.log(data);
-                return [2 /*return*/, (data)];
+                return [2 /*return*/, data];
             case 4:
                 error_1 = _a.sent();
                 console.log('error', error_1);
@@ -116,6 +119,7 @@ var postData = function (urlPost, data) {
         });
     });
 };
+// Exercici 2
 /* Function to update User Interface */
 var updateUI = function (urlUI) { return __awaiter(_this, void 0, void 0, function () {
     var request, newEntry, error_3;
@@ -132,10 +136,49 @@ var updateUI = function (urlUI) { return __awaiter(_this, void 0, void 0, functi
                 newEntry = _a.sent();
                 document.getElementById('date').innerHTML = newEntry.date;
                 document.getElementById('response').innerHTML = 'Joke of the day: ' + newEntry.joke;
-                return [2 /*return*/, (newEntry)];
+                document.getElementById('score-row').style.display = 'block';
+                return [2 /*return*/, newEntry];
             case 4:
                 error_3 = _a.sent();
                 console.log('error', error_3);
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+/* Declare empty array to fill with reports */
+var reportJokes = [];
+/* Function to get score from rating buttons */
+function scoreValue(id) {
+    var resultRating = id;
+    console.log(resultRating);
+    return resultRating;
+}
+/* Define function to create report entries */
+var report = function (urlUI) { return __awaiter(_this, void 0, void 0, function () {
+    var request, newEntry, object, error_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, fetch(urlUI)];
+            case 1:
+                request = _a.sent();
+                _a.label = 2;
+            case 2:
+                _a.trys.push([2, 4, , 5]);
+                return [4 /*yield*/, request.json()];
+            case 3:
+                newEntry = _a.sent();
+                object = {
+                    joke: newEntry.joke,
+                    score: scoreValue(1),
+                    date: newDate
+                };
+                reportJokes.push(object);
+                console.log(reportJokes);
+                return [2 /*return*/, object];
+            case 4:
+                error_4 = _a.sent();
+                console.log('error', error_4);
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }

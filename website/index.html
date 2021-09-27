@@ -15,8 +15,16 @@
             <button id="button" class="btn btn-primary col-4" type="submit">Get your joke</button>
         </div>
         <div class="response row align-items-center">
-            <div id="date" class="fw-bold fs-6"></div>
+            <div id="date" class="fw-bold"></div>
             <div id="response"></div>
+        </div>
+        <div id="score-row" class="row float-end">
+            <div id="score-text">Please rate your joke</div>
+            <div id="score-buttons">
+                <button id="button1" class="score btn btn-danger col-1" onclick="scoreValue(1)">1</button>
+                <button id="button2" class="score btn btn-warning col-1" onclick="scoreValue(2)">2</button>
+                <button id="button3" class="score btn btn-success col-1" onclick="scoreValue(3)">3</button>
+            </div>
         </div>
     </main>
    
