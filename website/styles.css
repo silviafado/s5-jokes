@@ -1,3 +1,8 @@
 .container-fluid {
     margin: 50px;
 }
+
+.response {
+    height: 100px;
+    margin-top: 30px;
+}
