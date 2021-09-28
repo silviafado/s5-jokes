@@ -55,7 +55,8 @@ app.post('/addEntry', addEntry);
 function addEntry(request, response) {
     projectData = {
         date: request.body.date,
-        joke: request.body.joke
+        joke: request.body.joke,
+        jokeNorris: request.body.jokeNorris
     };
     response.send({ message: "Post received", projectData });
 };

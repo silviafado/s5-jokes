@@ -11,6 +11,10 @@ const urlPostWeather: string = 'http://localhost:8000/addWeather';
 const urlUIWeather: string = 'http://localhost:8000/weather';
 /* Personal API Key for OpenWeatherMap API */
 const apiKey: string = '&appid=1111cbdcf8fc8f48d8f36f640aab97dc&units=metric';
+/* URLs for Chuck Norris jokes API calls */
+const urlChuck = 'https://api.chucknorris.io/jokes/random';
+/* Array with jokes URLS for API calls exercise 5 */
+const urls: string[] = ['https://icanhazdadjoke.com/', 'https://api.chucknorris.io/jokes/random']
 
 /* Create a new date instance dynamically with JS */
 let d = new Date();
@@ -21,9 +25,9 @@ const generate = (<HTMLElement>document.getElementById('button')).addEventListen
 
 /* Function called by event listener */
 function performAction(e: Event) {
-    getJoke(urlAPI)
+    getJoke(urls)
         .then(function (data) {
-            postData(urlPost, data = { date: newDate, joke: data.joke })
+            postData(urlPost, data = { date: newDate, joke: data.joke, jokeNorris: data.value })
                 .then(function () {
                     updateUI()
                 })
@@ -31,8 +35,9 @@ function performAction(e: Event) {
 }
 
 /* Function to GET jokes API Data */
-const getJoke = async (urlAPI: string) => {
-    const res = await fetch(urlAPI, {
+const getJoke = async (urls: string[]) => {
+    let randomURL: number = Math.round(Math.random());
+    const res = await fetch(urls[randomURL], {
         headers: { 'Accept': 'application/json' }
     })
     try {
@@ -69,9 +74,14 @@ const updateUI = async () => {
     try {
         const newEntry = await request.json();
         (<HTMLElement>document.getElementById('date')).innerHTML = newEntry.date;
-        (<HTMLElement>document.getElementById('response')).innerHTML = 'Joke of the day: ' + newEntry.joke;
         (<HTMLElement>document.getElementById('score-row')).style.display = 'block';
-        return newEntry;
+        if (newEntry.jokeNorris === undefined) {
+            (<HTMLElement>document.getElementById('response')).innerHTML = 'Joke of the day: ' + newEntry.joke;
+            return newEntry;
+        } else if (newEntry.joke === undefined) {
+            (<HTMLElement>document.getElementById('response')).innerHTML = 'Joke of the day: ' + newEntry.jokeNorris;
+            return newEntry;
+        } 
     } catch (error) {
         console.log('error', error);
     }
@@ -92,6 +102,7 @@ function scoreValue(id: number): number {
 /* Define Interface for reportJokes */
 interface IreportAcudits {
     joke: string;
+    jokeNorris: string,
     score: number;
     date: string;
 }
@@ -106,6 +117,7 @@ const report = async (urlUI: string) => {
         const newEntry = await request.json();
         const object: IreportAcudits = {
             joke: newEntry.joke,
+            jokeNorris: newEntry.jokeNorris,
             score: resultRating,
             date: newDate
         }

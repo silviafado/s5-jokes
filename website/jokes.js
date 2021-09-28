@@ -47,6 +47,10 @@ var urlPostWeather = 'http://localhost:8000/addWeather';
 var urlUIWeather = 'http://localhost:8000/weather';
 /* Personal API Key for OpenWeatherMap API */
 var apiKey = '&appid=1111cbdcf8fc8f48d8f36f640aab97dc&units=metric';
+/* URLs for Chuck Norris jokes API calls */
+var urlChuck = 'https://api.chucknorris.io/jokes/random';
+/* Array with jokes URLS for API calls exercise 5 */
+var urls = ['https://icanhazdadjoke.com/', 'https://api.chucknorris.io/jokes/random'];
 /* Create a new date instance dynamically with JS */
 var d = new Date();
 var newDate = d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear();
@@ -54,22 +58,24 @@ var newDate = d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear();
 var generate = document.getElementById('button').addEventListener('click', performAction);
 /* Function called by event listener */
 function performAction(e) {
-    getJoke(urlAPI)
+    getJoke(urls)
         .then(function (data) {
-        postData(urlPost, data = { date: newDate, joke: data.joke })
+        postData(urlPost, data = { date: newDate, joke: data.joke, jokeNorris: data.value })
             .then(function () {
             updateUI();
         });
     });
 }
 /* Function to GET jokes API Data */
-var getJoke = function (urlAPI) { return __awaiter(_this, void 0, void 0, function () {
-    var res, data, error_1;
+var getJoke = function (urls) { return __awaiter(_this, void 0, void 0, function () {
+    var randomURL, res, data, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, fetch(urlAPI, {
-                    headers: { 'Accept': 'application/json' }
-                })];
+            case 0:
+                randomURL = Math.round(Math.random());
+                return [4 /*yield*/, fetch(urls[randomURL], {
+                        headers: { 'Accept': 'application/json' }
+                    })];
             case 1:
                 res = _a.sent();
                 _a.label = 2;
@@ -139,9 +145,16 @@ var updateUI = function () { return __awaiter(_this, void 0, void 0, function ()
             case 3:
                 newEntry = _a.sent();
                 document.getElementById('date').innerHTML = newEntry.date;
-                document.getElementById('response').innerHTML = 'Joke of the day: ' + newEntry.joke;
                 document.getElementById('score-row').style.display = 'block';
-                return [2 /*return*/, newEntry];
+                if (newEntry.jokeNorris === undefined) {
+                    document.getElementById('response').innerHTML = 'Joke of the day: ' + newEntry.joke;
+                    return [2 /*return*/, newEntry];
+                }
+                else if (newEntry.joke === undefined) {
+                    document.getElementById('response').innerHTML = 'Joke of the day: ' + newEntry.jokeNorris;
+                    return [2 /*return*/, newEntry];
+                }
+                return [3 /*break*/, 5];
             case 4:
                 error_3 = _a.sent();
                 console.log('error', error_3);
@@ -178,6 +191,7 @@ var report = function (urlUI) { return __awaiter(_this, void 0, void 0, function
                 newEntry = _a.sent();
                 object = {
                     joke: newEntry.joke,
+                    jokeNorris: newEntry.jokeNorris,
                     score: resultRating,
                     date: newDate
                 };
