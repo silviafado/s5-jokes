@@ -1,5 +1,6 @@
 /* Setup empty JS object to act as endpoint for all routes */
 projectData = {};
+tempData = {};
 
 /* Express to run server and routes */
 const express = require('express');
@@ -36,19 +37,36 @@ function listening(){
 
 /* Initialize all route with a callback function */
 app.get('/all', getData);
-
 /* Callback function to complete GET '/all' */
 function getData(req,res){
     res.send(projectData)
 };
 
-/* POST route */
-app.post('/addEntry', addEntry);
+/* Initialize weather route with a callback function */
+app.get('/weather', getWeather);
+/* Callback function to complete GET '/weather' */
+function getWeather(req,res){
+    res.send(tempData)
+};
 
+/* POST route for jokes API */
+app.post('/addEntry', addEntry);
+/* Async function for jokes API call */
 function addEntry(request, response) {
     projectData = {
         date: request.body.date,
         joke: request.body.joke
     };
     response.send({ message: "Post received", projectData });
+};
+
+/* POST route for weather API */
+app.post('/addWeather', addWeather);
+/* Async function for weather API */
+async function addWeather(request, response) {
+    tempData = {
+        location: request.body.location,
+        temp: request.body.temp
+    };
+    response.send({ message: "Post received", tempData });
 };

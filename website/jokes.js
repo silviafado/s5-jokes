@@ -37,10 +37,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var _this = this;
-/* URLs for API calls */
+/* URLs for joke API calls */
 var urlAPI = 'https://icanhazdadjoke.com/';
 var urlPost = 'http://localhost:8000/addEntry';
 var urlUI = 'http://localhost:8000/all';
+/* URLs for weather API calls */
+var baseURL = 'http://api.openweathermap.org/data/2.5/weather?q=';
+var urlPostWeather = 'http://localhost:8000/addWeather';
+var urlUIWeather = 'http://localhost:8000/weather';
+/* Personal API Key for OpenWeatherMap API */
+var apiKey = '&appid=1111cbdcf8fc8f48d8f36f640aab97dc&units=metric';
 /* Create a new date instance dynamically with JS */
 var d = new Date();
 var newDate = d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear();
@@ -52,11 +58,11 @@ function performAction(e) {
         .then(function (data) {
         postData(urlPost, data = { date: newDate, joke: data.joke })
             .then(function () {
-            updateUI(urlUI);
+            updateUI();
         });
     });
 }
-/* Function to GET Web API Data */
+/* Function to GET jokes API Data */
 var getJoke = function (urlAPI) { return __awaiter(_this, void 0, void 0, function () {
     var res, data, error_1;
     return __generator(this, function (_a) {
@@ -82,8 +88,9 @@ var getJoke = function (urlAPI) { return __awaiter(_this, void 0, void 0, functi
         }
     });
 }); };
-/* Function to POST data */
-var postData = function (urlPost, data) {
+/* Function to POST jokes data */
+var postData = function (url, data) {
+    if (url === void 0) { url = ''; }
     if (data === void 0) { data = {}; }
     return __awaiter(_this, void 0, void 0, function () {
         var response, newData, error_2;
@@ -91,7 +98,7 @@ var postData = function (urlPost, data) {
             switch (_a.label) {
                 case 0:
                     console.log(data);
-                    return [4 /*yield*/, fetch(urlPost, {
+                    return [4 /*yield*/, fetch(url, {
                             method: 'POST',
                             credentials: 'same-origin',
                             headers: { 'Content-Type': 'application/json; charset=UTF-8' },
@@ -117,8 +124,8 @@ var postData = function (urlPost, data) {
     });
 };
 // Exercici 2
-/* Function to update User Interface */
-var updateUI = function (urlUI) { return __awaiter(_this, void 0, void 0, function () {
+/* Function to update User Interface with jokes */
+var updateUI = function () { return __awaiter(_this, void 0, void 0, function () {
     var request, newEntry, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -180,6 +187,106 @@ var report = function (urlUI) { return __awaiter(_this, void 0, void 0, function
             case 4:
                 error_4 = _a.sent();
                 console.log('error', error_4);
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+// Nivell 2: Exercici 4
+/* Event listener to get weather when loading DOM */
+var generateWeather = window.addEventListener('DOMContentLoaded', showForecast);
+/* Function called by event listener */
+function showForecast(e) {
+    var city = 'Barcelona';
+    var url = baseURL + city + apiKey;
+    getWeather(url)
+        .then(function (data) {
+        console.log(data);
+        postWeather(urlPostWeather, data = { location: 'Barcelona', temp: data.main.temp })
+            .then(function (newWeather) {
+            updateWeather();
+        });
+    });
+}
+/* Function to GET weather API Data */
+var getWeather = function (url) { return __awaiter(_this, void 0, void 0, function () {
+    var res, data, error_5;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, fetch(url)];
+            case 1:
+                res = _a.sent();
+                _a.label = 2;
+            case 2:
+                _a.trys.push([2, 4, , 5]);
+                return [4 /*yield*/, res.json()];
+            case 3:
+                data = _a.sent();
+                console.log(data);
+                return [2 /*return*/, (data)];
+            case 4:
+                error_5 = _a.sent();
+                console.log('error', error_5);
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+/* Function to POST weather data */
+var postWeather = function (url, data) {
+    if (url === void 0) { url = ''; }
+    if (data === void 0) { data = {}; }
+    return __awaiter(_this, void 0, void 0, function () {
+        var response, newWeather, error_6;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    console.log(data);
+                    return [4 /*yield*/, fetch(url, {
+                            method: 'POST',
+                            credentials: 'same-origin',
+                            headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+                            body: JSON.stringify(data)
+                        })];
+                case 1:
+                    response = _a.sent();
+                    _a.label = 2;
+                case 2:
+                    _a.trys.push([2, 4, , 5]);
+                    return [4 /*yield*/, response.json()];
+                case 3:
+                    newWeather = _a.sent();
+                    console.log(newWeather);
+                    return [2 /*return*/, newWeather];
+                case 4:
+                    error_6 = _a.sent();
+                    console.log('error', error_6);
+                    return [3 /*break*/, 5];
+                case 5: return [2 /*return*/];
+            }
+        });
+    });
+};
+/* Function to update User Interface with weather data */
+var updateWeather = function () { return __awaiter(_this, void 0, void 0, function () {
+    var request, newEntryW, error_7;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, fetch(urlUIWeather)];
+            case 1:
+                request = _a.sent();
+                _a.label = 2;
+            case 2:
+                _a.trys.push([2, 4, , 5]);
+                return [4 /*yield*/, request.json()];
+            case 3:
+                newEntryW = _a.sent();
+                document.getElementById('location').innerHTML = 'Location: ' + newEntryW.location;
+                document.getElementById('temp').innerHTML = 'Temperature in ºC: ' + newEntryW.temp;
+                return [2 /*return*/, newEntryW];
+            case 4:
+                error_7 = _a.sent();
+                console.log('error', error_7);
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }

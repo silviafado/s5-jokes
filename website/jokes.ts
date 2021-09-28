@@ -1,10 +1,16 @@
 // Exercici 1
 /* Global Variables */
 
-/* URLs for API calls */
+/* URLs for joke API calls */
 const urlAPI: string = 'https://icanhazdadjoke.com/';
 const urlPost: string = 'http://localhost:8000/addEntry';
 const urlUI: string = 'http://localhost:8000/all';
+/* URLs for weather API calls */
+const baseURL: string = 'http://api.openweathermap.org/data/2.5/weather?q=';
+const urlPostWeather: string = 'http://localhost:8000/addWeather';
+const urlUIWeather: string = 'http://localhost:8000/weather';
+/* Personal API Key for OpenWeatherMap API */
+const apiKey: string = '&appid=1111cbdcf8fc8f48d8f36f640aab97dc&units=metric';
 
 /* Create a new date instance dynamically with JS */
 let d = new Date();
@@ -19,12 +25,12 @@ function performAction(e: Event) {
         .then(function (data) {
             postData(urlPost, data = { date: newDate, joke: data.joke })
                 .then(function () {
-                    updateUI(urlUI)         
+                    updateUI()
                 })
         })
 }
 
-/* Function to GET Web API Data */
+/* Function to GET jokes API Data */
 const getJoke = async (urlAPI: string) => {
     const res = await fetch(urlAPI, {
         headers: { 'Accept': 'application/json' }
@@ -38,10 +44,10 @@ const getJoke = async (urlAPI: string) => {
     }
 };
 
-/* Function to POST data */
-const postData = async (urlPost: string, data = {}) => {
+/* Function to POST jokes data */
+const postData = async (url = '', data = {}) => {
     console.log(data);
-    const response = await fetch(urlPost, {
+    const response = await fetch(url, {
         method: 'POST',
         credentials: 'same-origin',
         headers: { 'Content-Type': 'application/json; charset=UTF-8' },
@@ -57,8 +63,8 @@ const postData = async (urlPost: string, data = {}) => {
 }
 
 // Exercici 2
-/* Function to update User Interface */
-const updateUI = async (urlUI: string) => {
+/* Function to update User Interface with jokes */
+const updateUI = async () => {
     const request = await fetch(urlUI);
     try {
         const newEntry = await request.json();
@@ -80,10 +86,10 @@ function scoreValue(id: number): number {
     resultRating = id;
     console.log(resultRating);
     report(urlUI);
-    return resultRating   
+    return resultRating
 }
 
-/* Define Interface */
+/* Define Interface for reportJokes */
 interface IreportAcudits {
     joke: string;
     score: number;
@@ -106,6 +112,67 @@ const report = async (urlUI: string) => {
         reportJokes.push(object);
         console.log(reportJokes);
         return object;
+    } catch (error) {
+        console.log('error', error);
+    }
+}
+
+// Nivell 2: Exercici 4
+/* Event listener to get weather when loading DOM */
+const generateWeather = window.addEventListener('DOMContentLoaded', showForecast);
+
+/* Function called by event listener */
+function showForecast(e: Event) {
+    const city: string = 'Barcelona';
+    const url: string = baseURL + city + apiKey;
+    getWeather(url)
+        .then(function (data) {
+            console.log(data)
+            postWeather(urlPostWeather, data = { location: 'Barcelona', temp: data.main.temp })
+                .then(function (newWeather) {
+                    updateWeather()
+                })
+        })
+}
+
+/* Function to GET weather API Data */
+const getWeather = async (url: string) => {
+    const res = await fetch(url);
+    try {
+        const data = await res.json();
+        console.log(data);
+        return (data);
+    } catch (error) {
+        console.log('error', error);
+    }
+};
+
+/* Function to POST weather data */
+const postWeather = async (url = '', data = {}) => {
+    console.log(data);
+    const response = await fetch(url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+        body: JSON.stringify(data),
+    })
+    try {
+        const newWeather = await response.json();
+        console.log(newWeather);
+        return newWeather;
+    } catch (error) {
+        console.log('error', error);
+    }
+}
+
+/* Function to update User Interface with weather data */
+const updateWeather = async () => {
+    const request = await fetch(urlUIWeather);
+    try {
+        const newEntryW = await request.json();
+        (<HTMLElement>document.getElementById('location')).innerHTML = 'Location: ' + newEntryW.location;
+        (<HTMLElement>document.getElementById('temp')).innerHTML = 'Temperature in ºC: ' + newEntryW.temp;
+        return newEntryW;
     } catch (error) {
         console.log('error', error);
     }
