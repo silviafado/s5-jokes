@@ -52,10 +52,7 @@ function performAction(e) {
         .then(function (data) {
         postData(urlPost, data = { date: newDate, joke: data.joke })
             .then(function () {
-            updateUI(urlUI)
-                .then(function () {
-                report(urlUI);
-            });
+            updateUI(urlUI);
         });
     });
 }
@@ -146,14 +143,18 @@ var updateUI = function (urlUI) { return __awaiter(_this, void 0, void 0, functi
         }
     });
 }); };
-/* Declare empty array to fill with reports */
-var reportJokes = [];
+// Exercici 3
+/* Declare variable for score rating */
+var resultRating;
 /* Function to get score from rating buttons */
 function scoreValue(id) {
-    var resultRating = id;
+    resultRating = id;
     console.log(resultRating);
+    report(urlUI);
     return resultRating;
 }
+/* Declare empty array to fill in with reports */
+var reportJokes = [];
 /* Define function to create report entries */
 var report = function (urlUI) { return __awaiter(_this, void 0, void 0, function () {
     var request, newEntry, object, error_4;
@@ -170,7 +171,7 @@ var report = function (urlUI) { return __awaiter(_this, void 0, void 0, function
                 newEntry = _a.sent();
                 object = {
                     joke: newEntry.joke,
-                    score: scoreValue(1),
+                    score: resultRating,
                     date: newDate
                 };
                 reportJokes.push(object);
