@@ -12,20 +12,21 @@
 </head>
 
 <body>
-    <div class="container bg-image img-fluid">
+    <div id="main-container" class="container-fluid bg-image">
         <header id="header" class="container-fluid">
             <div id="weather" class="container-fluid float-start">
                 <div id="weather-icon" class="weather-icon">
-                    <img id="weather-img" src="/website/assets/weather-icons/unknown.png"/>
+                    <img id="weather-img" src="/website/assets/weather-icons/unknown.png" />
                 </div>
                 <div id="temp" class=""></div>
             </div>
         </header>
         <main class="container justify-content-center">
-            <div id="title" class="row fs-4 fw-bolder text-white justify-content-center">Start the day with a laugh!</div>
+            <div id="title" class="row fs-4 fw-bolder text-white justify-content-center">Start the day with a laugh!
+            </div>
             <div class="response row justify-content-center">
                 <div id="date" class="fw-bold text-white"></div>
-                <div id="response" class="text-white col-5 justify-content-center"></div>
+                <div id="response" class="text-white col-10 col-md-8 col-lg-5 justify-content-center"></div>
             </div>
             <div id="score-row" class="row  ">
                 <div id="score-buttons" class="row justify-content-center">
@@ -34,11 +35,11 @@
                     <button id="button3" class="score btn col-1" onclick="scoreValue(3)"></button>
                 </div>
             </div>
-            <div id="button-container" class="row">
-                <button id="button" class="btn joke-button col-3" type="submit"></button>
+            <div id="button-container" class="row justify-content-center">
+                <button id="button" class="btn joke-button col-10 col-md-6 col-lg-3" type="submit"></button>
             </div>
-            
-            
+
+
         </main>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"

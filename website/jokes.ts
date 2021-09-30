@@ -73,7 +73,6 @@ const updateUI = async () => {
     const request = await fetch(urlUI);
     try {
         const newEntry = await request.json();
-        (<HTMLElement>document.getElementById('date')).innerHTML = newEntry.date;
         (<HTMLElement>document.getElementById('score-row')).style.display = 'block';
         if (newEntry.jokeNorris === undefined) {
             (<HTMLElement>document.getElementById('response')).innerHTML = 'Joke of the day: ' + newEntry.joke;

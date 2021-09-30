@@ -144,7 +144,6 @@ var updateUI = function () { return __awaiter(_this, void 0, void 0, function ()
                 return [4 /*yield*/, request.json()];
             case 3:
                 newEntry = _a.sent();
-                document.getElementById('date').innerHTML = newEntry.date;
                 document.getElementById('score-row').style.display = 'block';
                 if (newEntry.jokeNorris === undefined) {
                     document.getElementById('response').innerHTML = 'Joke of the day: ' + newEntry.joke;
