@@ -216,7 +216,7 @@ function showForecast(e) {
     getWeather(url)
         .then(function (data) {
         console.log(data);
-        postWeather(urlPostWeather, data = { location: 'Barcelona', temp: data.main.temp })
+        postWeather(urlPostWeather, data = { location: 'Barcelona', temp: data.main.temp, icon: data.weather[0].icon })
             .then(function (newWeather) {
             updateWeather();
         });
@@ -295,8 +295,8 @@ var updateWeather = function () { return __awaiter(_this, void 0, void 0, functi
                 return [4 /*yield*/, request.json()];
             case 3:
                 newEntryW = _a.sent();
-                document.getElementById('location').innerHTML = 'Location: ' + newEntryW.location;
-                document.getElementById('temp').innerHTML = 'Temperature in ºC: ' + newEntryW.temp;
+                document.getElementById('weather-icon').innerHTML = "<img src=\"/website/assets/weather-icons/" + newEntryW.icon + ".png\">";
+                document.getElementById('temp').innerHTML = Math.round(newEntryW.temp) + 'ºC';
                 return [2 /*return*/, newEntryW];
             case 4:
                 error_7 = _a.sent();

@@ -140,7 +140,7 @@ function showForecast(e: Event) {
     getWeather(url)
         .then(function (data) {
             console.log(data)
-            postWeather(urlPostWeather, data = { location: 'Barcelona', temp: data.main.temp })
+            postWeather(urlPostWeather, data = { location: 'Barcelona', temp: data.main.temp, icon: data.weather[0].icon })
                 .then(function (newWeather) {
                     updateWeather()
                 })
@@ -182,8 +182,8 @@ const updateWeather = async () => {
     const request = await fetch(urlUIWeather);
     try {
         const newEntryW = await request.json();
-        (<HTMLElement>document.getElementById('location')).innerHTML = 'Location: ' + newEntryW.location;
-        (<HTMLElement>document.getElementById('temp')).innerHTML = 'Temperature in ºC: ' + newEntryW.temp;
+        (<HTMLElement>document.getElementById('weather-icon')).innerHTML = `<img src="/website/assets/weather-icons/${newEntryW.icon}.png">`;
+        (<HTMLElement>document.getElementById('temp')).innerHTML = Math.round(newEntryW.temp) + 'ºC';
         return newEntryW;
     } catch (error) {
         console.log('error', error);

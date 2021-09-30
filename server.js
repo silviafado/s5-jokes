@@ -67,7 +67,8 @@ app.post('/addWeather', addWeather);
 async function addWeather(request, response) {
     tempData = {
         location: request.body.location,
-        temp: request.body.temp
+        temp: request.body.temp,
+        icon: request.body.icon
     };
     response.send({ message: "Post received", tempData });
 };
