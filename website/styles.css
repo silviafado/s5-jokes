@@ -1,0 +1,89 @@
+/* Main styling */
+#main-container {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.bg-image {
+    background-image: url('./assets/vector-background.svg');
+    background-size: cover;
+    height: 110vh;
+    background-position: center;
+}
+
+#header {
+    margin-top: 20px;
+    height: 200px ;
+}
+
+/* Weather header styling */
+#weather {
+    display: flex;
+}
+
+#weather-img {
+    width: 30px;
+    margin-right: 10px ;
+}
+
+#temp {
+    margin-left: 10px ;
+    padding-left: 10px;
+    padding-top: 15px;
+    border-left: 1px solid black;
+}
+
+/* Jokes response styling */
+.response {
+    height: auto;
+    margin-top: 30px;
+    
+}
+
+#response{
+    padding-left: 0px;
+}
+
+/* Buttons styling */
+#button1 {
+    background: url('./assets/vector-score1.svg') no-repeat top left;
+    height: 45px;  
+    outline: none;
+}
+
+#button2 {
+    background: url('./assets/vector-score2.svg') no-repeat top left;
+    height: 45px;  
+    outline: none;
+}
+
+#button3 {
+    background: url('./assets/vector-score3.svg') no-repeat top left;
+    height: 45px;  
+    outline: none;
+}
+
+.joke-button {
+    background: url('./assets/joke-button.svg') no-repeat top left;
+    height: 60px;  
+    outline: none;
+}
+
+#button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#score-row {
+    display: none;
+    
+}
+.score {
+    margin: 20px;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus{
+    outline: none;
+    box-shadow: none;
+}

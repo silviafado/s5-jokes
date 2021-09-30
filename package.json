@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/silviafado/s5-jokes#readme",
   "dependencies": {
-    "bootstrap": "^5.1.1"
+    "@types/es6-promise": "^3.3.0",
+    "body-parser": "^1.19.0",
+    "bootstrap": "^5.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
   }
 }
